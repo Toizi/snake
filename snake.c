@@ -129,7 +129,7 @@ void setup_level (screen_t *screen, snake_t *snake, int level)
 {
    int i, row, col;
 
-   srand ((unsigned int)time (NULL));
+   //srand ((unsigned int)time (NULL));
 
    /* Initialize on (re)start */
    if (1 == level)
@@ -228,7 +228,7 @@ void setup_level (screen_t *screen, snake_t *snake, int level)
    //gotoxy (3, 1);
    //printf ("h:Help");
    gotoxy (30, 1);
-   printf ("[ Micro Snake v%s ]", VERSION);
+   //printf ("[ Micro Snake v%s ]", VERSION);
 }
 
 void move (snake_t *snake, char keys[], char key)
@@ -433,11 +433,13 @@ int main (void)
    screen_t screen;
    char keys[NUM_KEYS] = DEFAULT_KEYS;
 
-   if (WEXITSTATUS(system ("stty cbreak -echo stop u")))
+   WEXITSTATUS(system ("stty cbreak -echo stop u"));
+
+   /*if (WEXITSTATUS(system ("stty cbreak -echo stop u")))
    {
       fprintf (stderr, "Failed setting up the screen, is 'stty' missing?\n");
       return 1;
-   }
+   }*/
 
    /* Call it once to initialize the timer. */
    alarm_handler (0);
@@ -499,7 +501,8 @@ int main (void)
 
    clrscr ();
 
-   return WEXITSTATUS(system ("stty sane"));
+   WEXITSTATUS(system ("stty sane"));
+   return 0;
 }
 
 

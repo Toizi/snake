@@ -6,8 +6,8 @@
 # compiler (tcc?) and CFLAGS (-Os -W -Wall -Werror).
 
 VERSION   = 1.0.1
-CC       ?= gcc
-CFLAGS   += -W -Wall -Werror -DVERSION=\"$(VERSION)\"
+CC       ?= wllvm
+CFLAGS   += -W -Wall -Werror -DVERSION=\"$(VERSION)\" -O1
 
 all: snake
 

@@ -38,6 +38,20 @@
 /* Default 0.2 sec between snake movement. */
 unsigned int usec_delay = DEFAULT_DELAY;
 
+int predetermined_input[] = {
+   -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,102,-1,-1,-1,102,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,102,-1,-1,-1,-1,-1,-1,-1,-1,106,-1,-1,-1,-1,-1,-1,102,-1,-1,-1,-1,106,-1,-1,-1,-1,-1,-1,-1,-1,106,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,106,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,106,-1,-1,-1,-1,-1,-1,-1,102,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,106,-1,-1,102,-1,-1,-1,-1,-1,-1,106,-1,-1,102,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,102,-1,-1,-1,-1,102,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,32,-1,-1,-1,32,32,-1,32,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,113,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,110
+};
+
+static int get_input() {
+   static int pos = 0;
+
+   if (pos < (int)(sizeof(predetermined_input) / sizeof(predetermined_input[0])))
+      return predetermined_input[pos++];
+
+   printf("ran out of predetermined input\n");
+   abort();
+}
+
 int sigsetup (int signo, void (*callback)(int))
 {
    struct sigaction action;
@@ -454,7 +468,7 @@ int main (void)
 
       do
       {
-         keypress = (char)getchar ();
+         keypress = (char)get_input ();
 
          /* Move the snake one position. */
          move (&snake, keys, keypress);
@@ -493,7 +507,7 @@ int main (void)
 
       do
       {
-         keypress = getchar ();
+         keypress = get_input ();
       }
       while ((keypress != 'y') && (keypress != 'n'));
    }
